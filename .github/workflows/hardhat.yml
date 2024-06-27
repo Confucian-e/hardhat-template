@@ -13,10 +13,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+
     - name: Use pnpm
       uses: pnpm/action-setup@v4
-    - name: Install dependencies
-      run: pnpm install
+      with:
+        version: 9.x
+        run_install: true
+
     - name: Compile Contracts
       run: pnpm hardhat compile
 
@@ -24,9 +27,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+
     - name: Use pnpm
       uses: pnpm/action-setup@v4
-    - name: Install dependencies
-      run: pnpm install
+      with:
+        version: 9.x
+        run_install: true
+        
     - name: Test Contracts
       run: pnpm hardhat test
