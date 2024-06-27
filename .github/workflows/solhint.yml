@@ -1,0 +1,21 @@
+name: Solhint Check
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  solhint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Use pnpm
+      uses: pnpm/action-setup@v4
+    - name: Install dependencies
+      run: pnpm install
+    - name: Solhint Contracts
+      run: pnpm solhint contracts/**/*.sol

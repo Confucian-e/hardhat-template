@@ -1,0 +1,32 @@
+name: Hardhat Check
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Use pnpm
+      uses: pnpm/action-setup@v4
+    - name: Install dependencies
+      run: pnpm install
+    - name: Compile Contracts
+      run: pnpm hardhat compile
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Use pnpm
+      uses: pnpm/action-setup@v4
+    - name: Install dependencies
+      run: pnpm install
+    - name: Test Contracts
+      run: pnpm hardhat test
