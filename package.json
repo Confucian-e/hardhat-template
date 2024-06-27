@@ -6,8 +6,7 @@
   "scripts": {
     "compile": "hardhat compile",
     "test": "hardhat test",
-    "solhint": "solhint contracts/**/*.sol",
-    "prepare": "husky"
+    "solhint": "solhint contracts/**/*.sol"
   },
   "keywords": [],
   "author": "",
