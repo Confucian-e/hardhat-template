@@ -1,1 +1,3 @@
-pnpm test
+pnpm compile
+
+pnpm solhint --fix contracts/**/*.sol
