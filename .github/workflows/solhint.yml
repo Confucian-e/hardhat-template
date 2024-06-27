@@ -18,7 +18,9 @@ jobs:
       uses: pnpm/action-setup@v4
       with:
         version: 9.x
-        run_install: true
-        
+      
+    - name: Install Dependencies
+      run: pnpm install
+
     - name: Solhint Contracts
       run: pnpm solhint contracts/**/*.sol
