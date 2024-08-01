@@ -16,9 +16,26 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Generate a changelog
+      - name: Generate full changelog
         uses: orhun/git-cliff-action@v3
-        id: git-cliff
+        id: git-cliff-full
+        with:
+          config: cliff.toml
+          args: --output CHANGELOG.md
+        env:
+          OUTPUT: CHANGELOG.md
+          GITHUB_REPO: ${{ github.repository }}
+
+      - name: Commit updated CHANGELOG.md
+        id: commit-changelog
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "docs: update CHANGELOG.md"
+          file_pattern: CHANGELOG.md
+
+      - name: Generate changelog for release
+        uses: orhun/git-cliff-action@v3
+        id: git-cliff-release
         with:
           config: cliff.toml
           args: -vv --latest --strip header
@@ -26,7 +43,14 @@ jobs:
           OUTPUT: CHANGELOG.md
           GITHUB_REPO: ${{ github.repository }}
 
+      - name: Update tag ref
+        run: |
+          git push origin :refs/tags/${{ github.ref_name }}
+          git tag -fa ${{ github.ref_name }} -m "chore: update tag with changelog"
+          git push origin ${{ github.ref_name }}
+
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          body: ${{ steps.git-cliff.outputs.content }}
+          body: ${{ steps.git-cliff-release.outputs.content }}
+          tag_name: ${{ github.ref_name }}
