@@ -29,6 +29,6 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
-          git add CHANGELOG.md
+          git add ${{ steps.git-cliff-release.outputs.changelog }}
           git commit -m "Update changelog"
           git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git main  # 修改为您的目标分支
