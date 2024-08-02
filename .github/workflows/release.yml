@@ -1,4 +1,4 @@
-name: Update Changelog
+name: Publish Release
 
 on:
   push:
@@ -21,14 +21,13 @@ jobs:
         id: git-cliff-release
         with:
           config: cliff.toml
-          args: --verbose
+          args: -vv --latest --strip header
         env:
+          OUTPUT: CHANGELOG.md
           GITHUB_REPO: ${{ github.repository }}
 
-      - name: Update Changelog
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email 'github-actions[bot]@users.noreply.github.com'
-          git add CHANGELOG.md
-          git commit -m "Update changelog"
-          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git main  # 修改为您的目标分支
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          body: ${{ steps.git-cliff-release.outputs.content }}
+          tag_name: ${{ github.ref_name }}
