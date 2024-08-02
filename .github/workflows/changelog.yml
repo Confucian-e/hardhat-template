@@ -26,7 +26,7 @@ jobs:
           GITHUB_REPO: ${{ github.repository }}
 
       - name: Update Changelog
-      - uses: EndBug/add-and-commit@v9
+        uses: EndBug/add-and-commit@v9
         with:
           default_author: github_actions
           add: ${{ steps.git-cliff-release.outputs.changelog }}
