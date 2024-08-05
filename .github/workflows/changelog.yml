@@ -31,3 +31,4 @@ jobs:
           default_author: github_actions
           add: ${{ steps.git-cliff.outputs.changelog }}
           message: 'docs: update CHANGELOG.md'
+          push: origin ${{ github.default_branch }} --force
