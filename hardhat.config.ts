@@ -16,7 +16,10 @@ const Amoy_RPC_URL = vars.get(
   "https://polygon-amoy.blockpi.network/v1/rpc/public	"
 );
 
-const PrivateKey = vars.get("DEPLOYER_PRIVATE_KEY", "0x");
+const PrivateKey = vars.get(
+  "DEPLOYER_PRIVATE_KEY",
+  "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"  // hardhat test account
+);
 
 const config: HardhatUserConfig = {
   solidity: {
